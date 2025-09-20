@@ -1,5 +1,18 @@
 # 光伏图像识别演示网站 (Solar Image Recognition Demo)
 
+## 🌟 GitHub仓库
+
+**项目地址**: [https://github.com/bistuwangqiyuan/solar-image-recognition](https://github.com/bistuwangqiyuan/solar-image-recognition)
+
+[![GitHub stars](https://img.shields.io/github/stars/bistuwangqiyuan/solar-image-recognition?style=social)](https://github.com/bistuwangqiyuan/solar-image-recognition)
+[![GitHub forks](https://img.shields.io/github/forks/bistuwangqiyuan/solar-image-recognition?style=social)](https://github.com/bistuwangqiyuan/solar-image-recognition)
+[![GitHub license](https://img.shields.io/github/license/bistuwangqiyuan/solar-image-recognition)](https://github.com/bistuwangqiyuan/solar-image-recognition)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/your-site-id/deploy-status)](https://app.netlify.com/sites/your-site-name/deploys)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/bistuwangqiyuan/solar-image-recognition)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Astro](https://img.shields.io/badge/Astro-FF5D01?logo=astro&logoColor=white)](https://astro.build/)
+[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=white)](https://supabase.com/)
+
 ## 项目概述
 
 一个专业的光伏图像识别演示网站，能够识别光伏板状态、遮挡物（树叶、灰尘、云彩等）并进行智能分析。采用现代化技术栈构建，提供工业级可靠性和用户体验。
@@ -93,11 +106,17 @@ solarimagecs/
 - [ ] 用户认证系统
 - [ ] 移动端APP开发
 
-## 安装和运行
+## 🚀 快速开始
 
 ### 环境要求
 - Node.js 18+
 - pnpm (推荐) 或 npm
+
+### 克隆项目
+```bash
+git clone https://github.com/bistuwangqiyuan/solar-image-recognition.git
+cd solar-image-recognition
+```
 
 ### 本地开发
 ```bash
@@ -136,23 +155,42 @@ BAIDU_SECRET_KEY=your_baidu_secret_key
 - 自定义域名
 - CDN加速
 
-## 贡献指南
+## 🤝 贡献指南
 
-1. Fork 项目
-2. 创建功能分支
-3. 提交更改
-4. 推送到分支
-5. 创建 Pull Request
+我们欢迎所有形式的贡献！请遵循以下步骤：
 
-## 许可证
+### 贡献流程
+1. **Fork 项目** - 点击右上角的 Fork 按钮
+2. **克隆仓库** - `git clone https://github.com/your-username/solar-image-recognition.git`
+3. **创建分支** - `git checkout -b feature/your-feature-name`
+4. **提交更改** - `git commit -m "Add some feature"`
+5. **推送分支** - `git push origin feature/your-feature-name`
+6. **创建 PR** - 在GitHub上创建 Pull Request
 
-MIT License
+### 开发规范
+- 遵循现有的代码风格
+- 添加必要的测试用例
+- 更新相关文档
+- 确保所有测试通过
 
-## 联系方式
+### 报告问题
+- 使用 GitHub Issues 报告 bug
+- 提供详细的复现步骤
+- 包含环境信息和错误日志
 
-如有问题或建议，请通过以下方式联系：
-- 项目Issues
-- 邮箱: [your-email@example.com]
+## 📄 许可证
+
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+
+## 📞 联系方式
+
+- **项目地址**: [https://github.com/bistuwangqiyuan/solar-image-recognition](https://github.com/bistuwangqiyuan/solar-image-recognition)
+- **问题反馈**: [GitHub Issues](https://github.com/bistuwangqiyuan/solar-image-recognition/issues)
+- **功能建议**: [GitHub Discussions](https://github.com/bistuwangqiyuan/solar-image-recognition/discussions)
+
+## ⭐ 支持项目
+
+如果这个项目对您有帮助，请给我们一个 ⭐ Star！
 
 ---
 
