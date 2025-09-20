@@ -1,0 +1,275 @@
+---
+// RecognitionResult组件
+export interface Props {
+  result?: any;
+  loading?: boolean;
+}
+
+const { result, loading = false } = Astro.props;
+---
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="text-lg font-semibold text-gray-900">识别结果</h2>
+    <div class="flex items-center space-x-2">
+      <div id="result-status" class="w-3 h-3 rounded-full"></div>
+      <span id="result-status-text" class="text-sm font-medium"></span>
+    </div>
+  </div>
+  <div class="card-body">
+    {loading ? (
+      <div class="text-center py-8">
+        <div class="loading-spinner mx-auto mb-4"></div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">AI正在分析图片...</h3>
+        <p class="text-gray-600 mb-4">请稍候，这通常需要几秒钟时间</p>
+      </div>
+    ) : result ? (
+      <>
+        <!-- 整体置信度 -->
+        <div class="mb-6">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-medium text-gray-700">整体置信度</span>
+            <span id="overall-confidence" class="text-sm font-semibold"></span>
+          </div>
+          <div class="progress-bar">
+            <div id="confidence-bar" class="progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- 识别标签 -->
+        <div class="mb-6">
+          <h3 class="text-sm font-medium text-gray-700 mb-3">识别标签</h3>
+          <div id="recognition-tags" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <!-- 详细结果 -->
+        <div class="mb-6">
+          <h3 class="text-sm font-medium text-gray-700 mb-3">详细结果</h3>
+          <div id="detailed-results" class="space-y-3"></div>
+        </div>
+
+        <!-- 遮挡程度分析 -->
+        <div class="mb-6">
+          <h3 class="text-sm font-medium text-gray-700 mb-3">遮挡程度分析</h3>
+          <div id="coverage-analysis" class="p-4 rounded-lg"></div>
+        </div>
+
+        <!-- 清洁建议 -->
+        <div>
+          <h3 class="text-sm font-medium text-gray-700 mb-3">清洁建议</h3>
+          <div id="cleaning-advice" class="p-4 bg-blue-50 rounded-lg">
+            <p class="text-sm text-blue-800"></p>
+          </div>
+        </div>
+      </>
+    ) : (
+      <div class="text-center py-8">
+        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">等待识别结果</h3>
+        <p class="text-gray-600">请上传图片并开始识别</p>
+      </div>
+    )}
+  </div>
+  {result && (
+    <div class="card-footer">
+      <div class="flex space-x-3">
+        <button id="save-result" class="btn btn-primary flex-1">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+          </svg>
+          保存结果
+        </button>
+        <button id="share-result" class="btn btn-secondary flex-1">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+          </svg>
+          分享结果
+        </button>
+      </div>
+    </div>
+  )}
+</div>
+
+<script define:vars={{ result }}>
+  // 工具函数
+  function getConfidenceColor(confidence) {
+    if (confidence >= 0.8) return 'text-success-600';
+    if (confidence >= 0.6) return 'text-warning-600';
+    return 'text-danger-600';
+  }
+
+  function getConfidenceText(confidence) {
+    if (confidence >= 0.8) return '高';
+    if (confidence >= 0.6) return '中';
+    return '低';
+  }
+
+  function getTagClass(label) {
+    switch (label) {
+      case '正常光伏板': return 'tag-normal';
+      case '树叶遮挡': return 'tag-leaf';
+      case '灰尘覆盖': return 'tag-dust';
+      case '云彩阴影': return 'tag-cloud';
+      default: return 'tag-other';
+    }
+  }
+
+  // 显示识别结果
+  function displayResult(result) {
+    if (!result) return;
+
+    // DOM元素
+    const resultStatus = document.getElementById('result-status');
+    const resultStatusText = document.getElementById('result-status-text');
+    const overallConfidence = document.getElementById('overall-confidence');
+    const confidenceBar = document.getElementById('confidence-bar');
+    const recognitionTags = document.getElementById('recognition-tags');
+    const detailedResults = document.getElementById('detailed-results');
+    const coverageAnalysis = document.getElementById('coverage-analysis');
+    const cleaningAdvice = document.getElementById('cleaning-advice');
+
+    // 状态指示器
+    if (result.status === 'success') {
+      resultStatus.className = 'w-3 h-3 rounded-full bg-success-500';
+      resultStatusText.textContent = '识别成功';
+      resultStatusText.className = 'text-sm font-medium text-success-600';
+    } else {
+      resultStatus.className = 'w-3 h-3 rounded-full bg-danger-500';
+      resultStatusText.textContent = '识别失败';
+      resultStatusText.className = 'text-sm font-medium text-danger-600';
+    }
+
+    if (result.status === 'success') {
+      // 整体置信度
+      const confidencePercent = Math.round(result.confidence * 100);
+      overallConfidence.textContent = `${confidencePercent}%`;
+      overallConfidence.className = `text-sm font-semibold ${getConfidenceColor(result.confidence)}`;
+      confidenceBar.style.width = confidencePercent + '%';
+      confidenceBar.className = `progress-fill ${getConfidenceColor(result.confidence).replace('text-', 'bg-')}`;
+
+      // 识别标签
+      recognitionTags.innerHTML = '';
+      result.predictions.forEach(prediction => {
+        const tag = document.createElement('span');
+        tag.className = `recognition-tag ${getTagClass(prediction.label)}`;
+        tag.textContent = prediction.label;
+        recognitionTags.appendChild(tag);
+      });
+
+      // 详细结果
+      detailedResults.innerHTML = '';
+      result.predictions.forEach(prediction => {
+        const item = document.createElement('div');
+        item.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-lg';
+        item.innerHTML = `
+          <span class="text-sm font-medium text-gray-900">${prediction.label}</span>
+          <div class="flex items-center space-x-2">
+            <span class="text-sm ${getConfidenceColor(prediction.confidence)}">${Math.round(prediction.confidence * 100)}%</span>
+            <span class="text-xs text-gray-500">${getConfidenceText(prediction.confidence)}</span>
+          </div>
+        `;
+        detailedResults.appendChild(item);
+      });
+
+      // 遮挡程度分析
+      const coveragePredictions = result.predictions.filter(p => p.label !== '正常光伏板' && p.label !== '云彩阴影');
+      if (coveragePredictions.length > 0) {
+        const totalConfidence = coveragePredictions.reduce((sum, p) => sum + p.confidence, 0);
+        const avgConfidence = totalConfidence / coveragePredictions.length;
+        const percentage = Math.round(avgConfidence * 100);
+        
+        let level, description, bgColor;
+        if (percentage >= 70) {
+          level = 'high';
+          description = '严重遮挡';
+          bgColor = 'bg-danger-50 border-danger-200';
+        } else if (percentage >= 40) {
+          level = 'medium';
+          description = '中度遮挡';
+          bgColor = 'bg-warning-50 border-warning-200';
+        } else {
+          level = 'low';
+          description = '轻微遮挡';
+          bgColor = 'bg-success-50 border-success-200';
+        }
+        
+        coverageAnalysis.innerHTML = `
+          <div class="p-4 rounded-lg border ${bgColor}">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-gray-900">遮挡程度</span>
+              <span class="text-sm font-semibold ${getConfidenceColor(avgConfidence)}">${percentage}%</span>
+            </div>
+            <div class="text-sm text-gray-600">${description}</div>
+          </div>
+        `;
+      } else {
+        coverageAnalysis.innerHTML = `
+          <div class="p-4 rounded-lg border bg-success-50 border-success-200">
+            <div class="text-sm font-medium text-success-800">无遮挡</div>
+            <div class="text-sm text-success-600">光伏板状态良好</div>
+          </div>
+        `;
+      }
+
+      // 清洁建议
+      let advice = '';
+      result.predictions.forEach(prediction => {
+        switch (prediction.label) {
+          case '正常光伏板':
+            advice += '✅ 检测到正常工作的光伏板。';
+            break;
+          case '树叶遮挡':
+            advice += ' 🍃 发现树叶遮挡，建议及时清理以保持发电效率。';
+            break;
+          case '灰尘覆盖':
+            advice += ' 🧹 检测到灰尘覆盖，建议定期清洁光伏板表面。';
+            break;
+          case '云彩阴影':
+            advice += ' ☁️ 云彩阴影影响发电，这是正常现象。';
+            break;
+          default:
+            advice += ' ⚠️ 发现其他异物，建议检查并清理。';
+        }
+      });
+      
+      cleaningAdvice.querySelector('p').textContent = advice || '识别完成，请查看详细结果。';
+    } else {
+      // 错误情况
+      overallConfidence.textContent = '0%';
+      recognitionTags.innerHTML = '<span class="text-sm text-gray-500">识别失败</span>';
+      detailedResults.innerHTML = '<div class="text-sm text-gray-500">无法获取识别结果</div>';
+      coverageAnalysis.innerHTML = '<div class="text-sm text-gray-500">无法分析遮挡程度</div>';
+      cleaningAdvice.querySelector('p').textContent = result.error_message || '识别过程中发生错误，请重试。';
+    }
+  }
+
+  // 事件监听器
+  document.getElementById('save-result')?.addEventListener('click', () => {
+    alert('结果已保存到识别历史');
+  });
+
+  document.getElementById('share-result')?.addEventListener('click', () => {
+    if (!result) return;
+    
+    const shareText = `我刚刚使用光伏图像识别工具分析了光伏板状态，识别结果：${result.predictions.map(p => p.label).join('、')}`;
+    
+    if (navigator.share) {
+      navigator.share({
+        title: '光伏图像识别结果',
+        text: shareText,
+        url: window.location.href
+      });
+    } else {
+      navigator.clipboard.writeText(shareText).then(() => {
+        alert('分享内容已复制到剪贴板');
+      });
+    }
+  });
+
+  // 初始化显示结果
+  if (result) {
+    displayResult(result);
+  }
+</script>

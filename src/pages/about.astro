@@ -1,0 +1,311 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="关于我们 - 光伏图像识别技术介绍">
+  <div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 页面标题 -->
+      <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          关于光伏图像识别
+        </h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          了解我们的技术原理、服务特色和未来发展方向
+        </p>
+      </div>
+
+      <!-- 技术介绍 -->
+      <section class="mb-16">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">技术原理</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">AI视觉识别技术</h3>
+                <p class="text-gray-600 mb-4">
+                  我们采用先进的深度学习算法，结合计算机视觉技术，能够准确识别光伏板的各种状态和遮挡物类型。
+                  通过大量的光伏板图像训练，我们的模型具备了专业的识别能力。
+                </p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-success-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    基于深度学习的图像分类算法
+                  </li>
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-success-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    多标签识别和置信度评估
+                  </li>
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-success-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    实时图像预处理和优化
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">API服务集成</h3>
+                <p class="text-gray-600 mb-4">
+                  我们集成了多个领先的AI服务提供商，确保识别服务的稳定性和准确性。
+                  主要使用阿里云视觉智能API和百度AI开放平台，提供双重保障。
+                </p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-primary-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    阿里云视觉智能API（主要服务）
+                  </li>
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-primary-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    百度AI开放平台（备用服务）
+                  </li>
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-primary-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    智能故障转移和负载均衡
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 识别能力 -->
+      <section class="mb-16">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">识别能力</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <!-- 正常光伏板 -->
+              <div class="text-center p-4 bg-success-50 rounded-lg">
+                <div class="w-12 h-12 bg-success-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg class="w-6 h-6 text-success-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <h3 class="font-semibold text-gray-900 mb-2">正常光伏板</h3>
+                <p class="text-sm text-gray-600">识别光伏板完整性和工作状态</p>
+                <div class="mt-2 text-xs text-success-600 font-medium">准确率: 95%+</div>
+              </div>
+              
+              <!-- 树叶遮挡 -->
+              <div class="text-center p-4 bg-warning-50 rounded-lg">
+                <div class="w-12 h-12 bg-warning-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg class="w-6 h-6 text-warning-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <h3 class="font-semibold text-gray-900 mb-2">树叶遮挡</h3>
+                <p class="text-sm text-gray-600">检测树叶等植物遮挡</p>
+                <div class="mt-2 text-xs text-warning-600 font-medium">准确率: 88%+</div>
+              </div>
+              
+              <!-- 灰尘覆盖 -->
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <h3 class="font-semibold text-gray-900 mb-2">灰尘覆盖</h3>
+                <p class="text-sm text-gray-600">分析灰尘覆盖程度</p>
+                <div class="mt-2 text-xs text-gray-600 font-medium">准确率: 85%+</div>
+              </div>
+              
+              <!-- 云彩阴影 -->
+              <div class="text-center p-4 bg-blue-50 rounded-lg">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 16h-8z" />
+                  </svg>
+                </div>
+                <h3 class="font-semibold text-gray-900 mb-2">云彩阴影</h3>
+                <p class="text-sm text-gray-600">识别云彩阴影影响</p>
+                <div class="mt-2 text-xs text-blue-600 font-medium">准确率: 90%+</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 技术优势 -->
+      <section class="mb-16">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">技术优势</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div class="text-center">
+                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">快速处理</h3>
+                <p class="text-gray-600">
+                  平均处理时间5秒内，支持实时识别和批量处理，大幅提升工作效率。
+                </p>
+              </div>
+              
+              <div class="text-center">
+                <div class="w-16 h-16 bg-success-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg class="w-8 h-8 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">高精度识别</h3>
+                <p class="text-gray-600">
+                  识别准确率超过90%，采用多模型融合技术，确保识别结果的可靠性。
+                </p>
+              </div>
+              
+              <div class="text-center">
+                <div class="w-16 h-16 bg-solar-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg class="w-8 h-8 text-solar-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">专业建议</h3>
+                <p class="text-gray-600">
+                  基于识别结果提供专业的清洁和维护建议，帮助优化光伏板发电效率。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 应用场景 -->
+      <section class="mb-16">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">应用场景</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">光伏运维管理</h3>
+                <ul class="space-y-3 text-gray-600">
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-primary-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>定期巡检光伏板状态，及时发现遮挡和污染问题</span>
+                  </li>
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-primary-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>制定清洁计划，优化维护成本和时间安排</span>
+                  </li>
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-primary-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>建立数字化运维档案，追踪设备状态变化</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">投资评估分析</h3>
+                <ul class="space-y-3 text-gray-600">
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-primary-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>评估光伏电站运行状况和发电潜力</span>
+                  </li>
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-primary-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>分析环境因素对发电效率的影响</span>
+                  </li>
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-primary-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>提供数据支持，辅助投资决策</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 技术栈 -->
+      <section class="mb-16">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">技术栈</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="text-2xl font-bold text-gray-900 mb-2">Astro</div>
+                <div class="text-sm text-gray-600">前端框架</div>
+              </div>
+              
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="text-2xl font-bold text-gray-900 mb-2">Supabase</div>
+                <div class="text-sm text-gray-600">数据库服务</div>
+              </div>
+              
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="text-2xl font-bold text-gray-900 mb-2">Tailwind</div>
+                <div class="text-sm text-gray-600">样式框架</div>
+              </div>
+              
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="text-2xl font-bold text-gray-900 mb-2">Netlify</div>
+                <div class="text-sm text-gray-600">部署平台</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 联系我们 -->
+      <section class="mb-16">
+        <div class="card">
+          <div class="card-body text-center">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">联系我们</h2>
+            <p class="text-gray-600 mb-6">
+              如果您有任何问题或建议，欢迎与我们联系
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="mailto:contact@solarimagecs.com" class="btn btn-primary">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                发送邮件
+              </a>
+              
+              <a href="/recognition" class="btn btn-solar">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                开始使用
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>
+

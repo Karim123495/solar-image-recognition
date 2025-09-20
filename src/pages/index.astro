@@ -1,0 +1,310 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="光伏图像识别演示网站 - 智能识别光伏板状态和遮挡物">
+  <!-- 英雄区域 -->
+  <section class="relative bg-gradient-to-br from-primary-50 to-solar-50 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+          专业光伏图像识别
+          <span class="text-gradient block mt-2">AI驱动智能分析</span>
+        </h1>
+        <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+          采用先进的AI技术，智能识别光伏板状态、遮挡物类型，为光伏运维提供科学依据和清洁建议
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/recognition" class="btn btn-solar text-lg px-8 py-3">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            开始识别
+          </a>
+          <a href="/about" class="btn btn-secondary text-lg px-8 py-3">
+            了解更多
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 背景装饰 -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-40 -right-40 w-80 h-80 bg-solar-200 rounded-full opacity-20 animate-pulse-slow"></div>
+      <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-primary-200 rounded-full opacity-20 animate-pulse-slow"></div>
+    </div>
+  </section>
+
+  <!-- 功能特性 -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          核心功能特性
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          基于先进的AI视觉识别技术，提供专业的光伏板状态分析服务
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- 正常光伏板识别 -->
+        <div class="card text-center group hover:shadow-solar-lg transition-all duration-300">
+          <div class="card-body">
+            <div class="w-16 h-16 bg-success-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8 text-success-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">正常光伏板</h3>
+            <p class="text-gray-600 text-sm">智能识别正常工作的光伏板，评估发电效率</p>
+          </div>
+        </div>
+        
+        <!-- 树叶遮挡检测 -->
+        <div class="card text-center group hover:shadow-solar-lg transition-all duration-300">
+          <div class="card-body">
+            <div class="w-16 h-16 bg-warning-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8 text-warning-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">树叶遮挡</h3>
+            <p class="text-gray-600 text-sm">检测树叶等植物遮挡，提供清理建议</p>
+          </div>
+        </div>
+        
+        <!-- 灰尘覆盖分析 -->
+        <div class="card text-center group hover:shadow-solar-lg transition-all duration-300">
+          <div class="card-body">
+            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">灰尘覆盖</h3>
+            <p class="text-gray-600 text-sm">分析灰尘覆盖程度，评估清洁需求</p>
+          </div>
+        </div>
+        
+        <!-- 云彩阴影识别 -->
+        <div class="card text-center group hover:shadow-solar-lg transition-all duration-300">
+          <div class="card-body">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 16h-8z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">云彩阴影</h3>
+            <p class="text-gray-600 text-sm">识别云彩阴影影响，分析发电波动</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 技术优势 -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            先进AI技术
+            <span class="text-gradient block">精准识别分析</span>
+          </h2>
+          <p class="text-lg text-gray-600 mb-8">
+            采用阿里云视觉智能API和百度AI开放平台，结合深度学习算法，
+            实现高精度的光伏板状态识别和遮挡物检测。
+          </p>
+          
+          <div class="space-y-6">
+            <div class="flex items-start space-x-4">
+              <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <svg class="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">高精度识别</h3>
+                <p class="text-gray-600">识别准确率超过90%，支持多种遮挡物类型检测</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <svg class="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">快速处理</h3>
+                <p class="text-gray-600">平均处理时间5秒内，支持批量图片识别</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <svg class="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">智能建议</h3>
+                <p class="text-gray-600">基于识别结果提供专业的清洁和维护建议</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="relative">
+          <div class="bg-white rounded-2xl shadow-solar-lg p-8">
+            <div class="text-center mb-6">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">识别结果示例</h3>
+              <p class="text-gray-600">AI智能分析光伏板状态</p>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="flex items-center justify-between p-3 bg-success-50 rounded-lg">
+                <div class="flex items-center space-x-3">
+                  <div class="w-3 h-3 bg-success-500 rounded-full"></div>
+                  <span class="text-gray-900">正常光伏板</span>
+                </div>
+                <span class="text-success-600 font-semibold">95%</span>
+              </div>
+              
+              <div class="flex items-center justify-between p-3 bg-warning-50 rounded-lg">
+                <div class="flex items-center space-x-3">
+                  <div class="w-3 h-3 bg-warning-500 rounded-full"></div>
+                  <span class="text-gray-900">树叶遮挡</span>
+                </div>
+                <span class="text-warning-600 font-semibold">78%</span>
+              </div>
+              
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div class="flex items-center space-x-3">
+                  <div class="w-3 h-3 bg-gray-500 rounded-full"></div>
+                  <span class="text-gray-900">灰尘覆盖</span>
+                </div>
+                <span class="text-gray-600 font-semibold">45%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 使用流程 -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          简单三步
+          <span class="text-gradient block">开始识别</span>
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          上传光伏板图片，AI自动分析，获取专业识别结果和清洁建议
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- 步骤1 -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span class="text-2xl font-bold text-primary-600">1</span>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">上传图片</h3>
+          <p class="text-gray-600">
+            选择或拖拽光伏板图片到上传区域，支持JPG、PNG、WebP格式
+          </p>
+        </div>
+        
+        <!-- 步骤2 -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-solar-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span class="text-2xl font-bold text-solar-600">2</span>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">AI分析</h3>
+          <p class="text-gray-600">
+            AI自动识别光伏板状态和遮挡物类型，分析遮挡程度
+          </p>
+        </div>
+        
+        <!-- 步骤3 -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-success-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span class="text-2xl font-bold text-success-600">3</span>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">获取结果</h3>
+          <p class="text-gray-600">
+            查看详细的识别结果、置信度和专业的清洁维护建议
+          </p>
+        </div>
+      </div>
+      
+      <div class="text-center mt-12">
+        <a href="/recognition" class="btn btn-solar text-lg px-8 py-3">
+          立即开始识别
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 统计数据 -->
+  <section class="py-20 bg-gradient-to-r from-primary-600 to-solar-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+          平台数据统计
+        </h2>
+        <p class="text-xl text-primary-100">
+          专业可靠的光伏图像识别服务
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="text-center">
+          <div class="text-4xl md:text-5xl font-bold text-white mb-2">90%+</div>
+          <div class="text-primary-100">识别准确率</div>
+        </div>
+        
+        <div class="text-center">
+          <div class="text-4xl md:text-5xl font-bold text-white mb-2">&lt;5s</div>
+          <div class="text-primary-100">平均处理时间</div>
+        </div>
+        
+        <div class="text-center">
+          <div class="text-4xl md:text-5xl font-bold text-white mb-2">1000+</div>
+          <div class="text-primary-100">成功识别次数</div>
+        </div>
+        
+        <div class="text-center">
+          <div class="text-4xl md:text-5xl font-bold text-white mb-2">99.9%</div>
+          <div class="text-primary-100">服务可用性</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA区域 -->
+  <section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+        准备开始您的光伏识别之旅？
+      </h2>
+      <p class="text-xl text-gray-600 mb-8">
+        上传您的光伏板图片，体验专业的AI识别服务
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/recognition" class="btn btn-solar text-lg px-8 py-3">
+          开始识别
+        </a>
+        <a href="/about" class="btn btn-secondary text-lg px-8 py-3">
+          了解更多
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+

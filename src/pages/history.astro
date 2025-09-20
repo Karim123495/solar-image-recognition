@@ -1,0 +1,647 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="识别历史 - 查看光伏图像识别记录">
+  <div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 页面标题 -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          识别历史
+        </h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          查看您的光伏图像识别记录，分析识别趋势和结果统计
+        </p>
+      </div>
+
+      <!-- 统计卡片 -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="card">
+          <div class="card-body text-center">
+            <div class="text-3xl font-bold text-primary-600 mb-2" id="total-records">0</div>
+            <div class="text-sm text-gray-600">总识别次数</div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-body text-center">
+            <div class="text-3xl font-bold text-success-600 mb-2" id="success-rate">0%</div>
+            <div class="text-sm text-gray-600">成功率</div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-body text-center">
+            <div class="text-3xl font-bold text-warning-600 mb-2" id="avg-time">0s</div>
+            <div class="text-sm text-gray-600">平均处理时间</div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-body text-center">
+            <div class="text-3xl font-bold text-solar-600 mb-2" id="today-records">0</div>
+            <div class="text-sm text-gray-600">今日识别</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 筛选和搜索 -->
+      <div class="card mb-6">
+        <div class="card-body">
+          <div class="flex flex-col md:flex-row gap-4">
+            <!-- 搜索框 -->
+            <div class="flex-1">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="search-input"
+                  placeholder="搜索图片名称或识别结果..."
+                  class="input pl-10"
+                />
+                <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+            </div>
+            
+            <!-- 状态筛选 -->
+            <select id="status-filter" class="input w-full md:w-48">
+              <option value="">所有状态</option>
+              <option value="success">识别成功</option>
+              <option value="error">识别失败</option>
+            </select>
+            
+            <!-- 标签筛选 -->
+            <select id="label-filter" class="input w-full md:w-48">
+              <option value="">所有标签</option>
+              <option value="正常光伏板">正常光伏板</option>
+              <option value="树叶遮挡">树叶遮挡</option>
+              <option value="灰尘覆盖">灰尘覆盖</option>
+              <option value="云彩阴影">云彩阴影</option>
+              <option value="其他异物">其他异物</option>
+            </select>
+            
+            <!-- 日期筛选 -->
+            <select id="date-filter" class="input w-full md:w-48">
+              <option value="">所有时间</option>
+              <option value="today">今天</option>
+              <option value="week">本周</option>
+              <option value="month">本月</option>
+              <option value="year">今年</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 识别记录列表 -->
+      <div class="space-y-4" id="records-list">
+        <!-- 加载状态 -->
+        <div id="loading-state" class="text-center py-12">
+          <div class="loading-spinner mx-auto mb-4"></div>
+          <p class="text-gray-600">加载识别记录中...</p>
+        </div>
+        
+        <!-- 空状态 -->
+        <div id="empty-state" class="text-center py-12 hidden">
+          <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">暂无识别记录</h3>
+          <p class="text-gray-600 mb-4">开始您的第一次光伏图像识别吧</p>
+          <a href="/recognition" class="btn btn-solar">开始识别</a>
+        </div>
+        
+        <!-- 记录项模板 -->
+        <template id="record-template">
+          <div class="card record-item">
+            <div class="card-body">
+              <div class="flex flex-col lg:flex-row gap-6">
+                <!-- 图片预览 -->
+                <div class="flex-shrink-0">
+                  <img class="w-32 h-32 object-cover rounded-lg" alt="识别图片" />
+                </div>
+                
+                <!-- 记录信息 -->
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between mb-3">
+                    <div>
+                      <h3 class="text-lg font-semibold text-gray-900 truncate">图片名称</h3>
+                      <p class="text-sm text-gray-500">识别时间</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <span class="recognition-tag">状态标签</span>
+                      <button class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <!-- 识别结果 -->
+                  <div class="mb-4">
+                    <div class="flex flex-wrap gap-2 mb-2">
+                      <!-- 识别标签 -->
+                    </div>
+                    <div class="text-sm text-gray-600">
+                      <span class="font-medium">置信度:</span>
+                      <span class="confidence-text">85%</span>
+                      <span class="mx-2">•</span>
+                      <span class="font-medium">处理时间:</span>
+                      <span class="processing-time">3.2s</span>
+                    </div>
+                  </div>
+                  
+                  <!-- 操作按钮 -->
+                  <div class="flex flex-wrap gap-2">
+                    <button class="btn btn-primary text-sm view-detail">
+                      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                      查看详情
+                    </button>
+                    <button class="btn btn-secondary text-sm share-record">
+                      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      分享
+                    </button>
+                    <button class="btn btn-danger text-sm delete-record">
+                      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                      删除
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <!-- 分页 -->
+      <div id="pagination" class="flex justify-center mt-8 hidden">
+        <nav class="flex items-center space-x-2">
+          <button class="btn btn-secondary text-sm" disabled>
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            上一页
+          </button>
+          <div class="flex space-x-1">
+            <button class="btn btn-primary text-sm">1</button>
+            <button class="btn btn-secondary text-sm">2</button>
+            <button class="btn btn-secondary text-sm">3</button>
+          </div>
+          <button class="btn btn-secondary text-sm">
+            下一页
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- 详情模态框 -->
+  <div id="detail-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-gray-900">识别详情</h2>
+            <button id="close-modal" class="text-gray-400 hover:text-gray-600">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- 图片 -->
+            <div>
+              <img id="modal-image" class="w-full h-64 object-cover rounded-lg" alt="识别图片" />
+            </div>
+            
+            <!-- 详情信息 -->
+            <div class="space-y-4">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">基本信息</h3>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">图片名称:</span>
+                    <span id="modal-filename" class="font-medium"></span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">识别时间:</span>
+                    <span id="modal-time" class="font-medium"></span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">处理时间:</span>
+                    <span id="modal-processing-time" class="font-medium"></span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">使用API:</span>
+                    <span id="modal-api" class="font-medium"></span>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">识别结果</h3>
+                <div id="modal-results" class="space-y-2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 历史记录脚本 -->
+  <script>
+    // 模拟数据
+    const mockRecords = [
+      {
+        id: '1',
+        image_url: '/images/sample1.jpg',
+        image_name: '光伏板_20241219_001.jpg',
+        recognition_result: {
+          status: 'success',
+          predictions: [
+            { label: '正常光伏板', confidence: 0.95 },
+            { label: '树叶遮挡', confidence: 0.78 }
+          ],
+          confidence: 0.865,
+          processing_time: 3200,
+          api_used: 'aliyun'
+        },
+        created_at: new Date(Date.now() - 1000 * 60 * 30).toISOString()
+      },
+      {
+        id: '2',
+        image_url: '/images/sample2.jpg',
+        image_name: '光伏板_20241219_002.jpg',
+        recognition_result: {
+          status: 'success',
+          predictions: [
+            { label: '正常光伏板', confidence: 0.92 },
+            { label: '灰尘覆盖', confidence: 0.65 }
+          ],
+          confidence: 0.785,
+          processing_time: 2800,
+          api_used: 'baidu'
+        },
+        created_at: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString()
+      },
+      {
+        id: '3',
+        image_url: '/images/sample3.jpg',
+        image_name: '光伏板_20241219_003.jpg',
+        recognition_result: {
+          status: 'success',
+          predictions: [
+            { label: '正常光伏板', confidence: 0.88 },
+            { label: '云彩阴影', confidence: 0.72 }
+          ],
+          confidence: 0.8,
+          processing_time: 3500,
+          api_used: 'aliyun'
+        },
+        created_at: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString()
+      }
+    ];
+
+    // DOM元素
+    const loadingState = document.getElementById('loading-state');
+    const emptyState = document.getElementById('empty-state');
+    const recordsList = document.getElementById('records-list');
+    const recordTemplate = document.getElementById('record-template');
+    const pagination = document.getElementById('pagination');
+    const searchInput = document.getElementById('search-input');
+    const statusFilter = document.getElementById('status-filter');
+    const labelFilter = document.getElementById('label-filter');
+    const dateFilter = document.getElementById('date-filter');
+    const detailModal = document.getElementById('detail-modal');
+    const closeModal = document.getElementById('close-modal');
+
+    // 统计元素
+    const totalRecords = document.getElementById('total-records');
+    const successRate = document.getElementById('success-rate');
+    const avgTime = document.getElementById('avg-time');
+    const todayRecords = document.getElementById('today-records');
+
+    // 全局变量
+    let allRecords = [...mockRecords];
+    let filteredRecords = [...mockRecords];
+    let currentPage = 1;
+    const recordsPerPage = 10;
+
+    // 工具函数
+    function formatTime(date) {
+      const d = new Date(date);
+      const now = new Date();
+      const diff = now.getTime() - d.getTime();
+      
+      const seconds = Math.floor(diff / 1000);
+      const minutes = Math.floor(seconds / 60);
+      const hours = Math.floor(minutes / 60);
+      const days = Math.floor(hours / 24);
+      
+      if (days > 0) {
+        return `${days}天前`;
+      } else if (hours > 0) {
+        return `${hours}小时前`;
+      } else if (minutes > 0) {
+        return `${minutes}分钟前`;
+      } else {
+        return '刚刚';
+      }
+    }
+
+    function formatDate(date) {
+      const d = new Date(date);
+      return d.toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    }
+
+    function getConfidenceColor(confidence) {
+      if (confidence >= 0.8) return 'text-success-600';
+      if (confidence >= 0.6) return 'text-warning-600';
+      return 'text-danger-600';
+    }
+
+    function getTagClass(label) {
+      switch (label) {
+        case '正常光伏板': return 'tag-normal';
+        case '树叶遮挡': return 'tag-leaf';
+        case '灰尘覆盖': return 'tag-dust';
+        case '云彩阴影': return 'tag-cloud';
+        default: return 'tag-other';
+      }
+    }
+
+    // 更新统计信息
+    function updateStats() {
+      const total = allRecords.length;
+      const successful = allRecords.filter(r => r.recognition_result.status === 'success').length;
+      const successRatePercent = total > 0 ? Math.round((successful / total) * 100) : 0;
+      const avgProcessingTime = total > 0 ? 
+        Math.round(allRecords.reduce((sum, r) => sum + r.recognition_result.processing_time, 0) / total / 1000) : 0;
+      
+      const today = new Date().toDateString();
+      const todayCount = allRecords.filter(r => 
+        new Date(r.created_at).toDateString() === today
+      ).length;
+
+      totalRecords.textContent = total;
+      successRate.textContent = successRatePercent + '%';
+      avgTime.textContent = avgProcessingTime + 's';
+      todayRecords.textContent = todayCount;
+    }
+
+    // 创建记录项
+    function createRecordItem(record) {
+      const template = recordTemplate.content.cloneNode(true);
+      const item = template.querySelector('.record-item');
+      
+      // 设置图片
+      const img = item.querySelector('img');
+      img.src = record.image_url;
+      img.alt = record.image_name;
+      
+      // 设置基本信息
+      const title = item.querySelector('h3');
+      const time = item.querySelector('p');
+      title.textContent = record.image_name;
+      time.textContent = formatTime(record.created_at);
+      
+      // 设置状态标签
+      const statusTag = item.querySelector('.recognition-tag');
+      if (record.recognition_result.status === 'success') {
+        statusTag.textContent = '识别成功';
+        statusTag.className = 'recognition-tag tag-normal';
+      } else {
+        statusTag.textContent = '识别失败';
+        statusTag.className = 'recognition-tag tag-other';
+      }
+      
+      // 设置识别标签
+      const tagsContainer = item.querySelector('.flex.flex-wrap.gap-2.mb-2');
+      tagsContainer.innerHTML = '';
+      if (record.recognition_result.status === 'success') {
+        record.recognition_result.predictions.forEach(prediction => {
+          const tag = document.createElement('span');
+          tag.className = `recognition-tag ${getTagClass(prediction.label)}`;
+          tag.textContent = prediction.label;
+          tagsContainer.appendChild(tag);
+        });
+      }
+      
+      // 设置置信度和处理时间
+      const confidenceText = item.querySelector('.confidence-text');
+      const processingTime = item.querySelector('.processing-time');
+      if (record.recognition_result.status === 'success') {
+        const confidence = Math.round(record.recognition_result.confidence * 100);
+        confidenceText.textContent = confidence + '%';
+        confidenceText.className = `confidence-text ${getConfidenceColor(record.recognition_result.confidence)}`;
+        processingTime.textContent = (record.recognition_result.processing_time / 1000).toFixed(1) + 's';
+      } else {
+        confidenceText.textContent = '0%';
+        processingTime.textContent = '0s';
+      }
+      
+      // 设置事件监听器
+      const viewDetailBtn = item.querySelector('.view-detail');
+      const shareBtn = item.querySelector('.share-record');
+      const deleteBtn = item.querySelector('.delete-record');
+      
+      viewDetailBtn.addEventListener('click', () => showDetail(record));
+      shareBtn.addEventListener('click', () => shareRecord(record));
+      deleteBtn.addEventListener('click', () => deleteRecord(record.id));
+      
+      return item;
+    }
+
+    // 显示记录列表
+    function displayRecords() {
+      recordsList.innerHTML = '';
+      
+      if (filteredRecords.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      
+      emptyState.classList.add('hidden');
+      
+      const startIndex = (currentPage - 1) * recordsPerPage;
+      const endIndex = startIndex + recordsPerPage;
+      const pageRecords = filteredRecords.slice(startIndex, endIndex);
+      
+      pageRecords.forEach(record => {
+        const item = createRecordItem(record);
+        recordsList.appendChild(item);
+      });
+      
+      // 显示分页
+      if (filteredRecords.length > recordsPerPage) {
+        pagination.classList.remove('hidden');
+      } else {
+        pagination.classList.add('hidden');
+      }
+    }
+
+    // 显示详情
+    function showDetail(record) {
+      const modalImage = document.getElementById('modal-image');
+      const modalFilename = document.getElementById('modal-filename');
+      const modalTime = document.getElementById('modal-time');
+      const modalProcessingTime = document.getElementById('modal-processing-time');
+      const modalApi = document.getElementById('modal-api');
+      const modalResults = document.getElementById('modal-results');
+      
+      modalImage.src = record.image_url;
+      modalFilename.textContent = record.image_name;
+      modalTime.textContent = formatDate(record.created_at);
+      modalProcessingTime.textContent = (record.recognition_result.processing_time / 1000).toFixed(1) + 's';
+      modalApi.textContent = record.recognition_result.api_used.toUpperCase();
+      
+      modalResults.innerHTML = '';
+      if (record.recognition_result.status === 'success') {
+        record.recognition_result.predictions.forEach(prediction => {
+          const item = document.createElement('div');
+          item.className = 'flex items-center justify-between p-2 bg-gray-50 rounded';
+          item.innerHTML = `
+            <span class="text-sm font-medium">${prediction.label}</span>
+            <span class="text-sm ${getConfidenceColor(prediction.confidence)}">${Math.round(prediction.confidence * 100)}%</span>
+          `;
+          modalResults.appendChild(item);
+        });
+      } else {
+        modalResults.innerHTML = '<div class="text-sm text-gray-500">识别失败</div>';
+      }
+      
+      detailModal.classList.remove('hidden');
+    }
+
+    // 分享记录
+    function shareRecord(record) {
+      const shareText = `我刚刚查看了光伏图像识别结果：${record.image_name}，识别结果：${record.recognition_result.predictions.map(p => p.label).join('、')}`;
+      
+      if (navigator.share) {
+        navigator.share({
+          title: '光伏图像识别结果',
+          text: shareText,
+          url: window.location.href
+        });
+      } else {
+        navigator.clipboard.writeText(shareText).then(() => {
+          alert('分享内容已复制到剪贴板');
+        });
+      }
+    }
+
+    // 删除记录
+    function deleteRecord(recordId) {
+      if (confirm('确定要删除这条识别记录吗？')) {
+        allRecords = allRecords.filter(r => r.id !== recordId);
+        filteredRecords = filteredRecords.filter(r => r.id !== recordId);
+        updateStats();
+        displayRecords();
+      }
+    }
+
+    // 筛选记录
+    function filterRecords() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const statusValue = statusFilter.value;
+      const labelValue = labelFilter.value;
+      const dateValue = dateFilter.value;
+      
+      filteredRecords = allRecords.filter(record => {
+        // 搜索筛选
+        if (searchTerm && !record.image_name.toLowerCase().includes(searchTerm)) {
+          return false;
+        }
+        
+        // 状态筛选
+        if (statusValue && record.recognition_result.status !== statusValue) {
+          return false;
+        }
+        
+        // 标签筛选
+        if (labelValue && record.recognition_result.status === 'success') {
+          const hasLabel = record.recognition_result.predictions.some(p => p.label === labelValue);
+          if (!hasLabel) return false;
+        }
+        
+        // 日期筛选
+        if (dateValue) {
+          const recordDate = new Date(record.created_at);
+          const now = new Date();
+          
+          switch (dateValue) {
+            case 'today':
+              if (recordDate.toDateString() !== now.toDateString()) return false;
+              break;
+            case 'week':
+              const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+              if (recordDate < weekAgo) return false;
+              break;
+            case 'month':
+              const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+              if (recordDate < monthAgo) return false;
+              break;
+            case 'year':
+              if (recordDate.getFullYear() !== now.getFullYear()) return false;
+              break;
+          }
+        }
+        
+        return true;
+      });
+      
+      currentPage = 1;
+      displayRecords();
+    }
+
+    // 事件监听器
+    searchInput.addEventListener('input', filterRecords);
+    statusFilter.addEventListener('change', filterRecords);
+    labelFilter.addEventListener('change', filterRecords);
+    dateFilter.addEventListener('change', filterRecords);
+
+    closeModal.addEventListener('click', () => {
+      detailModal.classList.add('hidden');
+    });
+
+    detailModal.addEventListener('click', (e) => {
+      if (e.target === detailModal) {
+        detailModal.classList.add('hidden');
+      }
+    });
+
+    // 初始化
+    function init() {
+      // 模拟加载延迟
+      setTimeout(() => {
+        loadingState.classList.add('hidden');
+        updateStats();
+        displayRecords();
+      }, 1000);
+    }
+
+    // 启动应用
+    init();
+  </script>
+</Layout>
+
